@@ -277,7 +277,7 @@ else:
 st.markdown("""
     <style>
     body {
-        background-image: url('https://www.transparenttextures.com/patterns/green-fibers.png');
+        background-image:url('background.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
