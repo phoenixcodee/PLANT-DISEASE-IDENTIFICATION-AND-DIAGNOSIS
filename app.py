@@ -11,46 +11,17 @@ st.set_page_config(
     layout="centered"
 )
 
-# Custom styled HTML header
-st.markdown("""
-    <style>
-    .main-title {
-        text-align: center;
-        font-size: 48px;
-        color: #2E8B57;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-    .subtitle {
-        text-align: center;
-        font-size: 20px;
-        color: #6e6e6e;
-        margin-bottom: 20px;
-    }
-    .uploadbox .css-1y0tads {
-        border: 2px dashed #2E8B57;
-        padding: 20px;
-    }
-    </style>
-    <h1 class='main-title'>🌿 Plant Disease Identification & Diagnosis</h1>
-    <div class='subtitle'>Upload a leaf image and let our AI identify potential plant diseases</div>
-""", unsafe_allow_html=True)
-
 st.title("🌿 Plant Disease Diagnosis App")
 st.write("Upload a leaf image and let the AI diagnose its health status.")
 
 
 # -------------- Load your model --------------
-
 @st.cache_resource
 def load_plant_model():
-    try:
-        model = load_model("plant_disease_model_retrained.3.keras")
-        st.success("✅ Model loaded successfully!")
-        return model
-    except Exception as e:
-        st.error(f"❌ Failed to load model: {e}")
-        raise
+    model = load_model("plant_disease_model_retrained.3.keras")
+    return model
+
+model = load_plant_model()
 
 # -------------- Class names --------------
 class_names = [
@@ -207,7 +178,7 @@ disease_info= {
 uploaded_file = st.file_uploader("Choose a leaf image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    img = Image.open(uploaded_file).convert("RGB")
+    img = Image.open(uploaded_file)
     st.image(img, caption="Uploaded Image", use_container_width=True)
 
     if st.button("Diagnose"):
@@ -246,54 +217,14 @@ if uploaded_file is not None:
         st.markdown(f"### 🧠 Confidence: **{confidence * 100:.2f}%**")
         if confidence < 0.7:
             st.warning("⚠️ Low confidence — please consider manual verification.")
-            
-    # ✅ Moved here to avoid error
-    st.success(f"✅ AI confidently identified this as **{info['disease']}** with **{confidence * 100:.2f}%** certainty.")
-
- # ✅ Generate downloadable report here
-    report = f"""
-🌿 PLANT DISEASE DIAGNOSIS REPORT
-
-🪴 Plant: {info['plant']}
-🔬 Taxonomy: {info['taxonomy']}
-🌿 Status: {info['status']}
-🦠 Disease: {info['disease']}
-📌 Cause: {info['cause']}
-🥕 Nutrient Deficiency: {info['deficiency']}
-🧪 Diagnosis: {info['diagnosis']}
-🧠 Confidence: {confidence * 100:.2f}%
-"""
-
-    st.download_button(
-        label="📥 Download Diagnosis Report",
-        data=report,
-        file_name="plant_disease_report.txt",
-        mime="text/plain"
-    )
 
 else:
     st.info("👆 Please upload a leaf image to start diagnosis.")
 
-
-
-
 # Footer
-st.markdown("""
-    <style>
-    body {
-        background-image:url('background.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-    </style>
-
-    <hr style="border-top: 1px solid #bbb;">
-    <div style='text-align: center; color: gray; font-size: 15px;'>
-        Developed with 💚 by <strong>Jaydish Kennedy J</strong><br>
-        AI-ML Developer | Plant Health for Smarter Farming
-    </div>
-""", unsafe_allow_html=True)
-
-
+st.markdown("---")
+st.markdown(
+    "<center>Developed by jaydish kennedy.j<br>AI-ML Developer</center>",
+    unsafe_allow_html=True
+)
 
