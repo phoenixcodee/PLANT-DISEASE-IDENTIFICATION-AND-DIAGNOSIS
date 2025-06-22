@@ -17,7 +17,7 @@ st.write("Upload a leaf image and let the AI diagnose its health status.")
 
 # -------------- Load your model --------------
 def load_plant_model():
-    model = load_model("plant_disease_model_retrained.3.keras")
+    model = load_model("plant_disease_model_retrained.3.h5")
     return model
 
 model = load_plant_model()
