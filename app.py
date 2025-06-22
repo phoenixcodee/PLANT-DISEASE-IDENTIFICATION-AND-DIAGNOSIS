@@ -16,9 +16,8 @@ st.write("Upload a leaf image and let the AI diagnose its health status.")
 
 
 # -------------- Load your model --------------
-@st.cache_resource
 def load_plant_model():
-    model = load_model("saved_models/plant_disease_model_retrained.3.keras")
+    model = load_model("plant_disease_model_retrained.3.keras")
     return model
 
 model = load_plant_model()
