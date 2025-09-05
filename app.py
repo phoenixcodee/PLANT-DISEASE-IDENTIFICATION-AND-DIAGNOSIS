@@ -17,7 +17,7 @@ st.write("Upload a leaf image and let the AI diagnose its health status.")
 
 # -------------- Load your model --------------
 def load_plant_model():
-    model = load_model("plant_disease_model_retrained.3.keras")
+    model = load_model("plant_disease_model_retrained.5.keras")
     return model
 
 model = load_plant_model()
@@ -226,4 +226,5 @@ st.markdown(
     "<center>Developed by jaydish kennedy.j<br>AI-ML Developer</center>",
     unsafe_allow_html=True
 )
+
 
